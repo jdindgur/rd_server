@@ -11,6 +11,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 /**
  * Internal User Representation
@@ -50,6 +51,9 @@ public class User implements Serializable {
 
   @Column(nullable = false)
   private UserStatus status;
+
+  @Column(nullable = true)
+  private Date dob;
 
   public Long getId() {
     return id;
@@ -103,5 +107,13 @@ public class User implements Serializable {
 
   public void setStatus(UserStatus status) {
     this.status = status;
+  }
+
+  public Date getDOB() {
+    return dob;
+  }
+
+  public void setDOB(Date dob) {
+    this.dob = dob;
   }
 }

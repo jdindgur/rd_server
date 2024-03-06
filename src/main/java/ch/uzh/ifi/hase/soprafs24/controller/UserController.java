@@ -3,6 +3,7 @@ package ch.uzh.ifi.hase.soprafs24.controller;
 import ch.uzh.ifi.hase.soprafs24.entity.User;
 import ch.uzh.ifi.hase.soprafs24.rest.dto.UserGetDTO;
 import ch.uzh.ifi.hase.soprafs24.rest.dto.UserPostDTO;
+import ch.uzh.ifi.hase.soprafs24.rest.dto.UserPutDTO;
 import ch.uzh.ifi.hase.soprafs24.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs24.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -53,5 +54,18 @@ public class UserController {
     User createdUser = userService.createUser(userInput);
     // convert internal representation of user back to API
     return DTOMapper.INSTANCE.convertEntityToUserGetDTO(createdUser);
+  }
+
+  @PutMapping("/users")
+  @ResponseStatus(HttpStatus.OK)
+  @ResponseBody
+  public UserGetDTO modifyUser(@RequestBody UserPutDTO userPutDTO) {
+    // convert API user to internal representation
+    User userInput = DTOMapper.INSTANCE.convertUserPutDTOtoEntity(userPutDTO);
+
+    // modify user
+    User modifiedUser = userService.modifyUser(userInput);
+    // convert internal representation of user back to API
+    return DTOMapper.INSTANCE.convertEntityToUserGetDTO(modifiedUser);
   }
 }

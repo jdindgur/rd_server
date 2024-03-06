@@ -1,14 +1,15 @@
 package ch.uzh.ifi.hase.soprafs24.rest.dto;
 
+import java.util.Date;
+
 import ch.uzh.ifi.hase.soprafs24.constant.UserStatus;
 
-public class UserGetDTO {
+public class UserPutDTO {
 
   private Long id;
   private String name;
   private String username;
   private String password;
-  private String creatime;
   private String dob;
   private UserStatus status;
 
@@ -44,12 +45,12 @@ public class UserGetDTO {
     this.password = password;
   }
 
-  public String getCreatime() {
-    return creatime;
+  public UserStatus getStatus() {
+    return status;
   }
 
-  public void setCreatime(String creatime) {
-    this.creatime = creatime;
+  public void setStatus(UserStatus status) {
+    this.status = status;
   }
 
   public String getDOB() {
@@ -58,13 +59,5 @@ public class UserGetDTO {
 
   public void setDOB(String dob) {
     this.dob = dob;
-  }
-
-  public UserStatus getStatus() {
-    return status;
-  }
-
-  public void setStatus(UserStatus status) {
-    this.status = status;
   }
 }

@@ -8,8 +8,6 @@ public class UserPostDTO {
 
   private String password;
 
-//  private String creatime;
-
   public String getName() {
     return name;
   }
@@ -29,12 +27,6 @@ public class UserPostDTO {
   public String getPassword() {
     return password;
   }
-
-  /*
-  public String getCreatime() {
-    return creatime;
-  }
- */
 
   public void setPassword(String password) {
     this.password = password;

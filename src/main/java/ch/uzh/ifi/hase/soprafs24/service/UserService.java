@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -52,6 +53,17 @@ public class UserService {
     return newUser;
   }
 
+  public User modifyUser(User newUser) {
+    checkIfUserExists(newUser);
+    // saves the given entity but data is only persisted in the database once
+    // flush() is called
+    newUser = userRepository.save(newUser);
+    userRepository.flush();
+
+    log.debug("Modified Information for User: {}", newUser);
+    return newUser;
+  }
+
   /**
    * This is a helper method that will check the uniqueness criteria of the
    * username and the name
@@ -75,5 +87,27 @@ public class UserService {
     } else if (userByName != null) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage, "name", "is"));
     }
+  }
+
+  /**
+   * This is a helper method that will check the uniqueness criteria of the
+   * username and the name defined in the User entity. 
+   * The method will do nothing if the user for input exist and throw an error otherwise.
+   *
+   * @param userToBeModified
+   * @throws org.springframework.web.server.ResponseStatusException
+   * @see User
+   */
+  private User checkUserExists(User userToBeModified) {
+    User userByUsername = userRepository.findByUsername(userToBeModified.getUsername());
+
+    String baseErrorMessage = "The %s provided %s. Therefore, the user can not be modified!";
+    if (userByUsername == null) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage, "username", "does not exist"));
+    } else if (userByUsername.getId() == userToBeModified.getId()) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage, "id", "does not match"));
+    }
+
+    return userByUsername;
   }
 }
