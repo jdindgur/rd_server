@@ -6,6 +6,10 @@ public class UserPostDTO {
 
   private String username;
 
+  private String password;
+
+//  private String creatime;
+
   public String getName() {
     return name;
   }
@@ -20,5 +24,19 @@ public class UserPostDTO {
 
   public void setUsername(String username) {
     this.username = username;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
+  /*
+  public String getCreatime() {
+    return creatime;
+  }
+ */
+
+  public void setPassword(String password) {
+    this.password = password;
   }
 }

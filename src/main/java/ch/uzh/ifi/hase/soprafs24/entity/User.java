@@ -3,7 +3,14 @@ package ch.uzh.ifi.hase.soprafs24.entity;
 import ch.uzh.ifi.hase.soprafs24.constant.UserStatus;
 
 import javax.persistence.*;
+
+import org.hibernate.annotations.CreationTimestamp;
+
 import java.io.Serializable;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Internal User Representation
@@ -30,6 +37,13 @@ public class User implements Serializable {
 
   @Column(nullable = false, unique = true)
   private String username;
+
+  @Column(nullable = false)
+  private String password;
+
+  @Column(nullable = false)
+	@CreationTimestamp
+  private Instant  creatime;
 
   @Column(nullable = false, unique = true)
   private String token;
@@ -59,6 +73,20 @@ public class User implements Serializable {
 
   public void setUsername(String username) {
     this.username = username;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+  public String getCreatime() {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    LocalDateTime localDateTime = LocalDateTime.ofInstant(this.creatime, ZoneId.systemDefault());
+    return localDateTime.format(formatter);
   }
 
   public String getToken() {
